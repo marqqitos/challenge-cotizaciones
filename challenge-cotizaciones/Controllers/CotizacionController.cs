@@ -33,7 +33,15 @@ namespace challenge_cotizaciones.Controllers
             }
             else
             {
-                return await _cotizacionService.GetCotizacion(divisa.ToLower());
+                try
+                {
+                    return await _cotizacionService.GetCotizacion(divisa.ToLower());
+                }
+                catch(Exception e)
+                {
+                    _logger.LogError("Ocurrio un error al intentar obtener la cotizacion de: " + divisa + ", exception: " + e.Data);
+                    return StatusCode(500, "Ocurrio un error al intentar obtener la cotizacion de la divisa");
+                }
             }
         }
     }
