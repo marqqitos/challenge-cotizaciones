@@ -16,7 +16,7 @@ namespace challenge_cotizaciones.Services
             _cotizador = cotizador;
         }
 
-        public async Task<double> GetCotizacion(string divisa)
+        public async Task<decimal> GetCotizacion(string divisa)
         {
             return await _cotizador.GetCotizacion(divisa);
         }

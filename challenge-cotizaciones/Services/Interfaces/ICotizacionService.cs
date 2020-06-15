@@ -7,6 +7,6 @@ namespace challenge_cotizaciones.Services.Interfaces
 {
     public interface ICotizacionService
     {
-        public Task<double> GetCotizacion(string divisa);
+        public Task<decimal> GetCotizacion(string divisa);
     }
 }

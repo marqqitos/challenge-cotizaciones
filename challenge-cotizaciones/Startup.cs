@@ -2,10 +2,14 @@ using challenge_cotizaciones.Clients;
 using challenge_cotizaciones.Clients.Interfaces;
 using challenge_cotizaciones.Cotizadores;
 using challenge_cotizaciones.Cotizadores.Interfaces;
+using challenge_cotizaciones.DatabaseContext;
+using challenge_cotizaciones.Repositories;
+using challenge_cotizaciones.Repositories.Interfaces;
 using challenge_cotizaciones.Services;
 using challenge_cotizaciones.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,8 +35,11 @@ namespace challenge_cotizaciones
                 IDivisaClient realClient = serviceProvider.GetService<RealClient>();
                 return new Cotizador(dolarClient, realClient);
             });
+            services.AddScoped<IOperacionDivisaService, OperacionDivisaService>();
+            services.AddScoped<IOperacionDivisaRepository, OperacionDivisaRepository>();
             services.AddHttpClient<DolarClient>();
             services.AddHttpClient<RealClient>();
+            services.AddDbContext<OperacionesDivisasContext>(options => options.UseNpgsql(Configuration.GetConnectionString("OperacionDivisasContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

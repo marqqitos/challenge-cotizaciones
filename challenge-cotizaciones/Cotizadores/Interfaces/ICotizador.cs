@@ -7,6 +7,6 @@ namespace challenge_cotizaciones.Cotizadores.Interfaces
 {
     public interface ICotizador
     {
-        public Task<double> GetCotizacion(String divisa);
+        public Task<decimal> GetCotizacion(String divisa);
     }
 }

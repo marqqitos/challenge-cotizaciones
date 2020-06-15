@@ -22,7 +22,7 @@ namespace challenge_cotizaciones.Cotizadores
             };
         }
 
-        public async Task<double> GetCotizacion(string divisa)
+        public async Task<decimal> GetCotizacion(string divisa)
         {
             return await serviciosCotizacion.GetValueOrDefault(divisa).GetCotizacion();
         }

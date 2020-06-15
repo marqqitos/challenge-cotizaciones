@@ -7,6 +7,6 @@ namespace challenge_cotizaciones.Clients.Interfaces
 {
     public interface IDivisaClient
     {
-        public Task<double> GetCotizacion();
+        public Task<decimal> GetCotizacion();
     }
 }

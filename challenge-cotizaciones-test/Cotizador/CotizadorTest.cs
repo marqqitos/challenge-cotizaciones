@@ -1,5 +1,4 @@
 using Castle.Core.Logging;
-using challenge_cotizaciones.Clients;
 using challenge_cotizaciones.Clients.Interfaces;
 using challenge_cotizaciones.Cotizadores;
 using challenge_cotizaciones.Cotizadores.Interfaces;
@@ -28,22 +27,22 @@ namespace challenge_cotizaciones_test
         [Fact]
         public void CotizadorObtieneCorrectaCotizacionDelDolar()
         {
-            dolarClient.Setup(dc => dc.GetCotizacion()).Returns(Task.FromResult(72d));
+            dolarClient.Setup(dc => dc.GetCotizacion()).Returns(Task.FromResult(72m));
 
             var result = _cotizador.GetCotizacion("dolar");
 
             dolarClient.Verify(dc => dc.GetCotizacion(), Times.Once);
-            Assert.Equal(72d, result.Result);
+            Assert.Equal(72m, result.Result);
         }
 
         [Fact]
         public void CotizadorObtieneCorrectaCotizacionDelReal()
         {
-            realClient.Setup(rc => rc.GetCotizacion()).Returns(Task.FromResult(18d));
+            realClient.Setup(rc => rc.GetCotizacion()).Returns(Task.FromResult(18m));
             var result = _cotizador.GetCotizacion("real");
 
             realClient.Verify(rc => rc.GetCotizacion(), Times.Once);
-            Assert.Equal(18d, result.Result);
+            Assert.Equal(18m, result.Result);
         }
     }
 }

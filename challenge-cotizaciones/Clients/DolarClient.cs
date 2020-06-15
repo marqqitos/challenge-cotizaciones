@@ -25,7 +25,7 @@ namespace challenge_cotizaciones.Clients
             Client = client;
         }
 
-        public async Task<double> GetCotizacion()
+        public async Task<decimal> GetCotizacion()
         {
             var response = await Client.GetAsync("Principal/Dolar");
 
@@ -35,7 +35,7 @@ namespace challenge_cotizaciones.Clients
 
                 List<string> values = JsonConvert.DeserializeObject<List<string>>(response.Content.ReadAsStringAsync().Result);
 
-                return (double.Parse(values.ElementAt(1), CultureInfo.InvariantCulture));
+                return (decimal.Parse(values.ElementAt(1), CultureInfo.InvariantCulture));
             }
 
             catch(HttpRequestException e)

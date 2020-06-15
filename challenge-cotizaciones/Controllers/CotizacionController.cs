@@ -26,7 +26,7 @@ namespace challenge_cotizaciones.Controllers
         }
 
         [HttpGet("{divisa}")]
-        public async Task<ActionResult<double>> GetCotizacion(string divisa)
+        public async Task<ActionResult<decimal>> GetCotizacion(string divisa)
         {
             if (!DivisasAceptadas.Contains(divisa.ToLower())) {
                 return BadRequest("No se puede obtener cotizacion de la divisa solicitada");
