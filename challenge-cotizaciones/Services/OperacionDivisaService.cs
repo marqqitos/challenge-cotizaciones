@@ -46,10 +46,5 @@ namespace challenge_cotizaciones.Services
             }
             
         }
-
-        public decimal GetCantidadDivisasCompradasEnElMesPorUsuario(ComprarDivisaDTO compra)
-        {
-            return _repository.GetCantidadDivisasCompradasEnElMesPorUsuario(compra.IdUsuario, compra.Divisa);
-        }
     }
 }

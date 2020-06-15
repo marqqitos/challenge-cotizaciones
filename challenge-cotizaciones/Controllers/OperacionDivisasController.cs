@@ -33,16 +33,23 @@ namespace challenge_cotizaciones.Controllers
         {
             if(_divisasHabilitadasValidator.EsDivisaHabilitada(compraDivisas.Divisa))
             {
-                try
+                if(compraDivisas.MontoCompraPesos > 0)
                 {
-                    var success = await _operacionDivisaService.ComprarDivisa(compraDivisas);
+                    try
+                    {
+                        var success = await _operacionDivisaService.ComprarDivisa(compraDivisas);
 
-                    return success ? Ok("Compra de divisas exitosa") : StatusCode(412, "Se supero el limite mensual de compra de la divisa seleccionada");
+                        return success ? Ok("Compra de divisas exitosa") : StatusCode(412, "Se supero el limite mensual de compra de la divisa seleccionada");
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError("Ocurrio un error al intentar comprar la divisa, exception: " + e.Data);
+                        return StatusCode(500, "Ocurrio un error al intentar comprar la divisa");
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    _logger.LogError("Ocurrio un error al intentar comprar la divisa, exception: " + e.Data);
-                    return StatusCode(500, "Ocurrio un error al intentar comprar la divisa");
+                    return BadRequest("El monto en pesos debe ser mayor a 0");
                 }
             }
             else

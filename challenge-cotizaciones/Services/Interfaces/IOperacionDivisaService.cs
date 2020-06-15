@@ -10,6 +10,5 @@ namespace challenge_cotizaciones.Services.Interfaces
     public interface IOperacionDivisaService
     {
         public Task<bool> ComprarDivisa(ComprarDivisaDTO compra);
-        public decimal GetCantidadDivisasCompradasEnElMesPorUsuario(ComprarDivisaDTO compra);
     }
 }
