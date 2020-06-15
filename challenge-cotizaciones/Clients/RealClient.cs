@@ -28,8 +28,6 @@ namespace challenge_cotizaciones.Clients
 
             response.EnsureSuccessStatusCode();
 
-            response.EnsureSuccessStatusCode();
-
             List<string> values = JsonConvert.DeserializeObject<List<string>>(response.Content.ReadAsStringAsync().Result);
 
             return (double.Parse(values.ElementAt(1), CultureInfo.InvariantCulture) / 4);

@@ -15,9 +15,11 @@ namespace challenge_cotizaciones.Cotizadores
 
         public Cotizador(DolarClient dolarClient, RealClient realClient)
         {
-            serviciosCotizacion = new Dictionary<string, IDivisaClient>();
-            serviciosCotizacion.Add("dolar", dolarClient);
-            serviciosCotizacion.Add("real", realClient);
+            serviciosCotizacion = new Dictionary<string, IDivisaClient>
+            {
+                { "dolar", dolarClient },
+                { "real", realClient }
+            };
         }
 
         public async Task<double> GetCotizacion(string divisa)

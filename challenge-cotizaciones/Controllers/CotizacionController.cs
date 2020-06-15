@@ -14,7 +14,7 @@ namespace challenge_cotizaciones.Controllers
         private readonly ILogger<CotizacionController> _logger;
         private ICotizacionService _cotizacionService;
 
-        private static readonly string[] Divisas = new[]
+        private static readonly string[] DivisasAceptadas = new[]
         {
             "dolar", "real"
         };
@@ -28,7 +28,7 @@ namespace challenge_cotizaciones.Controllers
         [HttpGet("{divisa}")]
         public async Task<ActionResult<double>> GetCotizacion(string divisa)
         {
-            if (!Divisas.Contains(divisa.ToLower())) {
+            if (!DivisasAceptadas.Contains(divisa.ToLower())) {
                 return BadRequest("No se puede obtener cotizacion de la divisa solicitada");
             }
             else

@@ -9,7 +9,7 @@ namespace challenge_cotizaciones.Services
 {
     public class CotizacionService : ICotizacionService
     {
-        private ICotizador _cotizador;
+        private readonly ICotizador _cotizador;
 
         public CotizacionService(ICotizador cotizador)
         {
