@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace challenge_cotizaciones.Clients.Interfaces
 {
-    interface IDivisaClient
+    public interface IDivisaClient
     {
         public Task<double> GetCotizacion();
     }

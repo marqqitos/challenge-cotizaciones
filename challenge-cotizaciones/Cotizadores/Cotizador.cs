@@ -13,7 +13,7 @@ namespace challenge_cotizaciones.Cotizadores
     {
         private readonly Dictionary<string, IDivisaClient> serviciosCotizacion;
 
-        public Cotizador(DolarClient dolarClient, RealClient realClient)
+        public Cotizador(IDivisaClient dolarClient, IDivisaClient realClient)
         {
             serviciosCotizacion = new Dictionary<string, IDivisaClient>
             {

@@ -1,4 +1,5 @@
 using challenge_cotizaciones.Clients;
+using challenge_cotizaciones.Clients.Interfaces;
 using challenge_cotizaciones.Cotizadores;
 using challenge_cotizaciones.Cotizadores.Interfaces;
 using challenge_cotizaciones.Services;
@@ -25,7 +26,11 @@ namespace challenge_cotizaciones
         {
             services.AddControllers();
             services.AddScoped<ICotizacionService, CotizacionService>();
-            services.AddScoped<ICotizador, Cotizador>();
+            services.AddScoped<ICotizador, Cotizador>(serviceProvider => {
+                IDivisaClient dolarClient = serviceProvider.GetService<DolarClient>();
+                IDivisaClient realClient = serviceProvider.GetService<RealClient>();
+                return new Cotizador(dolarClient, realClient);
+            });
             services.AddHttpClient<DolarClient>();
             services.AddHttpClient<RealClient>();
         }
