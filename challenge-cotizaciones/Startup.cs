@@ -7,6 +7,8 @@ using challenge_cotizaciones.Repositories;
 using challenge_cotizaciones.Repositories.Interfaces;
 using challenge_cotizaciones.Services;
 using challenge_cotizaciones.Services.Interfaces;
+using challenge_cotizaciones.Validators;
+using challenge_cotizaciones.Validators.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +39,8 @@ namespace challenge_cotizaciones
             });
             services.AddScoped<IOperacionDivisaService, OperacionDivisaService>();
             services.AddScoped<IOperacionDivisaRepository, OperacionDivisaRepository>();
+            services.AddScoped<ILimiteMensualValidator, LimiteMensualValidator>();
+            services.AddScoped<IDivisasHabilitadasValidator, DivisasHabilitadasValidator>();
             services.AddHttpClient<DolarClient>();
             services.AddHttpClient<RealClient>();
             services.AddDbContext<OperacionesDivisasContext>(options => options.UseNpgsql(Configuration.GetConnectionString("OperacionDivisasContext")));

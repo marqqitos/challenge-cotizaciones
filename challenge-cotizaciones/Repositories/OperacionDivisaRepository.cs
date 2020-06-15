@@ -19,15 +19,26 @@ namespace challenge_cotizaciones.Repositories
             _context = context;
         }
 
-        public async Task<List<ComprasDivisas>> GetAll()
+        public decimal GetCantidadDivisasCompradasEnElMesPorUsuario(long idUsuario, string divisa)
         {
+            DateTime now = DateTime.Now;
+            var startDate = new DateTime(now.Year, now.Month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
             try
             {
-                return await _context.ComprasDivisas.ToListAsync();
+                var result = _context.ComprasDivisas
+                    .Where(cd => cd.IdUsuario.Equals(idUsuario) 
+                    && cd.FechaCompra >= startDate 
+                    && cd.FechaCompra <= endDate 
+                    && cd.Divisa.Equals(divisa))
+                    .Sum(cd => cd.MontoComprado);
+                
+                return result;
             }
             catch (Exception)
             {
-                return await _context.ComprasDivisas.ToListAsync();
+                return 0;
             }
 
             

@@ -10,6 +10,6 @@ namespace challenge_cotizaciones.Repositories.Interfaces
     public interface IOperacionDivisaRepository
     {
         public Task GuardarCompraDivisa(ComprasDivisas compra);
-        public Task<List<ComprasDivisas>> GetAll();
+        public decimal GetCantidadDivisasCompradasEnElMesPorUsuario(long idUsuario, string divisa);
     }
 }

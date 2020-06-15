@@ -9,6 +9,7 @@ using challenge_cotizaciones.Models;
 using challenge_cotizaciones.DTOs;
 using challenge_cotizaciones.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using challenge_cotizaciones.Validators.Interfaces;
 
 namespace challenge_cotizaciones.Controllers
 {
@@ -17,34 +18,36 @@ namespace challenge_cotizaciones.Controllers
     public class OperacionDivisasController : ControllerBase
     {
         private readonly ILogger<OperacionDivisasController> _logger;
+        private readonly IDivisasHabilitadasValidator _divisasHabilitadasValidator;
         private readonly IOperacionDivisaService _operacionDivisaService;
 
-        public OperacionDivisasController(ILogger<OperacionDivisasController> logger, IOperacionDivisaService operacionDivisaService)
+        public OperacionDivisasController(ILogger<OperacionDivisasController> logger, IDivisasHabilitadasValidator divisasHabilitadasValidator , IOperacionDivisaService operacionDivisaService)
         {
             _logger = logger;
+            _divisasHabilitadasValidator = divisasHabilitadasValidator;
             _operacionDivisaService = operacionDivisaService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<ComprasDivisas>>> Get()
-        {
-            var ocd = await _operacionDivisaService.GetAll();
-
-            return Ok(ocd);
-        }
-
         [HttpPost("comprar")]
-        public async Task<ActionResult> PostDivisasCompradasMes(ComprarDivisaDTO compraDivisas)
+        public async Task<ActionResult> ComprarDivisas(ComprarDivisaDTO compraDivisas)
         {
-            try
+            if(_divisasHabilitadasValidator.EsDivisaHabilitada(compraDivisas.Divisa))
             {
-                await _operacionDivisaService.ComprarDivisa(compraDivisas);
-                return Ok("Compra de divisas exitosa");
+                try
+                {
+                    var success = await _operacionDivisaService.ComprarDivisa(compraDivisas);
+
+                    return success ? Ok("Compra de divisas exitosa") : StatusCode(412, "Se supero el limite mensual de compra de la divisa seleccionada");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Ocurrio un error al intentar comprar la divisa, exception: " + e.Data);
+                    return StatusCode(500, "Ocurrio un error al intentar comprar la divisa");
+                }
             }
-            catch (Exception e)
+            else
             {
-                _logger.LogError("Ocurrio un error al intentar comprar la divisa, exception: " + e.Data);
-                return StatusCode(500, "Ocurrio un error al intentar comprar la divisa");
+                return BadRequest("La divisa solicitada no esta habilitada para la compra");
             }
         }
     }
